@@ -81,7 +81,7 @@ export default function Restaurant({
       />
       <ReviewDialog
         isOpen={isOpen}
-        handleClose={handleClose}
+        handleClose={(e) => handleClose(e)}
         review={review}
         onChange={onChange}
         userId={userId}
