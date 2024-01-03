@@ -9,6 +9,7 @@ const RestaurantDetails = ({
 	handleRestaurantImage,
 	setIsOpen,
 	isOpen,
+	deleteImage,
 }) => {
 	return (
 		<section className="img__section">
@@ -16,6 +17,7 @@ const RestaurantDetails = ({
 
 			<div className="actions">
 				{userId && (
+					<>
 					<img
 						className="review"
 						onClick={() => {
@@ -23,6 +25,10 @@ const RestaurantDetails = ({
 						}}
 						src="/review.svg"
 					/>
+					
+				
+					<button onClick={() => deleteImage()} >Delete Image</button>
+					</>
 				)}
 				<label
 					onChange={event => handleRestaurantImage(event.target)}

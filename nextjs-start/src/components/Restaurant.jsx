@@ -11,7 +11,7 @@ import {
 } from "@/src/lib/firebase/firestore.js";
 import { auth } from "@/src/lib/firebase/firebase.js";
 import {getUser} from '@/src/lib/getUser'
-import { updateRestaurantImage } from "@/src/lib/firebase/storage.js";
+import { updateRestaurantImage, deleteImage } from "@/src/lib/firebase/storage.js";
 import ReviewDialog from "@/src/components/ReviewDialog.jsx";
 import RestaurantDetails from "@/src/components/RestaurantDetails.jsx";
 import ReviewsList from "@/src/components/ReviewsList.jsx";
@@ -43,14 +43,20 @@ export default function Restaurant({
       return;
     }
 
-    const imageURL = await updateRestaurantImage(id, image);
-    setRestaurant({ ...restaurant, photo: imageURL });
+    const imageData = await updateRestaurantImage(id, image);
+    setRestaurant({ ...restaurant, photo: imageData.imageURL, imageName: imageData.imageName });
   }
 
   const handleClose = () => {
     setIsOpen(false);
     setReview({ rating: 0, text: "" });
   };
+
+  const handleDeleteImage = async () => {
+    const imageData = await deleteImage(id, restaurant.imageName)
+    setRestaurant({ ...restaurant, photo: imageData.imageURL, imageName: imageData.imageName });
+    
+  }
 
   useEffect(() => {
     const unsubscribeFromRestaurant = getRestaurantSnapshotById(id, (data) => {
@@ -77,6 +83,7 @@ export default function Restaurant({
         userId={userId}
         handleRestaurantImage={handleRestaurantImage}
         setIsOpen={setIsOpen}
+        deleteImage={handleDeleteImage}
         isOpen={isOpen}
       />
       <ReviewDialog

@@ -19,11 +19,12 @@ import { db } from "@/src/lib/firebase/firebase";
 
 export async function updateRestaurantImageReference(
 	restaurantId,
-	publicImageUrl
+	publicImageUrl,
+	imageName,
 ) {
 	const restaurantRef = doc(collection(db, "restaurants"), restaurantId);
 	if (restaurantRef) {
-		await updateDoc(restaurantRef, { photo: publicImageUrl });
+		await updateDoc(restaurantRef, { photo: publicImageUrl, imageName });
 	}
 }
 
@@ -138,6 +139,7 @@ export function getRestaurantsSnapshot(cb, filters = {}) {
 }
 
 export async function getRestaurantById(restaurantId) {
+	console.log('>>>', restaurantId)
 	if (!restaurantId) {
 		console.log("Error: Invalid ID received: ", restaurantId);
 		return;
@@ -146,7 +148,7 @@ export async function getRestaurantById(restaurantId) {
 	const docSnap = await getDoc(docRef);
 	return {
 		...docSnap.data(),
-		timestamp: docSnap.data().timestamp.toDate(),
+		timestamp: docSnap.data()?.timestamp.toDate(),
 	};
 }
 
