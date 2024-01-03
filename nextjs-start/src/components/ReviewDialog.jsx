@@ -18,9 +18,7 @@ const ReviewDialog = ({
 				<form
 					action={handleReviewFormSubmission}
 					onSubmit={() => {
-						console.log('step 2')
 						handleClose();
-						
 					}}
 				>
 					<header>

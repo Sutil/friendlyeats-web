@@ -7,19 +7,15 @@ import { getFirestore } from "firebase/firestore";
 // This is a next.js server action, an alpha feature, so
 // use with caution
 // https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions
-
-// Replace the function below
 export async function handleReviewFormSubmission(data) {
-    "use server"
-    console.log('submit review >>> ', data)
-    const { app } = await getAuthenticatedAppForUser();
-    const db = getFirestore(app);
+	const { app } = await getAuthenticatedAppForUser();
+	const db = getFirestore(app);
 
-    await addReviewToRestaurant(db, data.get("restaurantId"), {
-            text: data.get("text"),
-            rating: data.get("rating"),
+	await addReviewToRestaurant(db, data.get("restaurantId"), {
+		text: data.get("text"),
+		rating: data.get("rating"),
 
-            // This came from a hidden form field.
-            userId: data.get("userId"),
-    });
+		// This came from a hidden form field
+		userId: data.get("userId"),
+	});
 }

@@ -22,6 +22,7 @@ export const auth = getAuth(firebaseApp);
 export const db = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
 
+
 export async function getAuthenticatedAppForUser(session = null) {
 
 
